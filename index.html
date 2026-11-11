@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Votre outil idéal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Mise en page : une seule plaque de verre dépoli, centrée, posée sur un fond d'eau claire où dérivent des bulles. */
+:root{
+  --bg:#d9e7e5; --bg2:#eef2ea;
+  --ink:#11272d; --muted:#4a646c;
+  --accent:#0e5a66; --on-accent:#f3fbfa;
+  --glass:rgba(255,255,255,.5); --glass-strong:rgba(255,255,255,.74);
+  --edge:rgba(255,255,255,.9); --line:rgba(17,39,45,.16);
+  --hi:rgba(255,255,255,.8);
+  --b1:#39a7a0; --b2:#ff9f80; --b3:#f3cf6b;
+  --shadow:rgba(16,60,70,.22); --warn:#a83a25;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#08161b; --bg2:#10262c;
+    --ink:#e9f3f2; --muted:#9bb4b9;
+    --accent:#7fd6cc; --on-accent:#06242a;
+    --glass:rgba(255,255,255,.07); --glass-strong:rgba(255,255,255,.14);
+    --edge:rgba(255,255,255,.22); --line:rgba(233,243,242,.18);
+    --hi:rgba(255,255,255,.45);
+    --b1:#1f7f7c; --b2:#c7654a; --b3:#a9872f;
+    --shadow:rgba(0,0,0,.5); --warn:#ff9a85;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#08161b; --bg2:#10262c;
+  --ink:#e9f3f2; --muted:#9bb4b9;
+  --accent:#7fd6cc; --on-accent:#06242a;
+  --glass:rgba(255,255,255,.07); --glass-strong:rgba(255,255,255,.14);
+  --edge:rgba(255,255,255,.22); --line:rgba(233,243,242,.18);
+  --hi:rgba(255,255,255,.45);
+  --b1:#1f7f7c; --b2:#c7654a; --b3:#a9872f;
+  --shadow:rgba(0,0,0,.5); --warn:#ff9a85;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{min-height:100%}
+body{
+  margin:0; min-height:100%;
+  background:linear-gradient(160deg,var(--bg),var(--bg2)) fixed;
+  background-color:var(--bg);
+  color:var(--ink);
+  font:400 16px/1.55 var(--body);
+  padding-block:28px 56px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* fond */
+.eau{position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:0}
+.tache{position:absolute; border-radius:50%; filter:blur(70px); opacity:.55}
+.bulle{
+  position:absolute; border-radius:50%;
+  background:
+    radial-gradient(circle at 30% 26%, var(--hi) 0 5%, transparent 20%),
+    radial-gradient(circle at 68% 76%, var(--tint), transparent 68%);
+  border:1px solid var(--edge);
+  box-shadow:inset 0 0 22px var(--glass-strong);
+  opacity:.8;
+  animation:derive var(--d) ease-in-out infinite alternate;
+}
+@keyframes derive{to{transform:translate(var(--dx),var(--dy))}}
+
+.page{position:relative; z-index:1; max-width:720px; margin:0 auto; display:flex; flex-direction:column; gap:22px}
+
+.entete{display:flex; flex-direction:column; gap:10px; padding:8px 6px 0}
+.marque{font:700 15px/1 var(--display); letter-spacing:.02em; display:flex; align-items:center; gap:8px}
+.marque i{width:14px; height:14px; border-radius:50%; border:1.5px solid var(--accent); background:radial-gradient(circle at 30% 30%, var(--hi), transparent 60%)}
+h1{font:700 clamp(30px,6.4vw,46px)/1.05 var(--display); letter-spacing:-.02em; margin:0; text-wrap:balance}
+.chapo{margin:0; color:var(--muted); max-width:56ch; font-size:17px}
+
+.verre{
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(22px) saturate(1.5);
+  backdrop-filter:blur(22px) saturate(1.5);
+  border:1px solid var(--edge);
+  border-radius:28px;
+  box-shadow:0 28px 60px -28px var(--shadow), inset 0 1px 0 var(--edge);
+  padding:clamp(18px,4vw,34px);
+  display:flex; flex-direction:column; gap:26px;
+}
+
+/* progression */
+.avance{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.pas{display:flex; gap:8px; list-style:none; margin:0; padding:0}
+.pas li{width:13px; height:13px; border-radius:50%; border:1.5px solid var(--line); background:var(--glass)}
+.pas li.fait{background:var(--accent); border-color:var(--accent)}
+.pas li.ici{border-color:var(--accent); box-shadow:0 0 0 4px var(--glass-strong); transform:scale(1.25)}
+.ou{font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600}
+
+.etape{display:flex; flex-direction:column; gap:24px; animation:entre .28s ease-out}
+@keyframes entre{from{transform:translateY(8px); opacity:.4}}
+h2{font:700 clamp(23px,4.6vw,30px)/1.12 var(--display); letter-spacing:-.015em; margin:0; text-wrap:balance; outline:none}
+.intro{margin:-14px 0 0; color:var(--muted)}
+
+.q{display:flex; flex-direction:column; gap:10px; border:0; margin:0; padding:0; min-width:0}
+.ql{font-weight:600; padding:0; font-size:16px}
+.ql small{font-weight:400; color:var(--muted); font-size:14px}
+
+input[type=text],textarea{
+  width:100%; font:inherit; color:var(--ink);
+  background:var(--glass-strong); border:1px solid var(--line);
+  border-radius:14px; padding:12px 14px;
+}
+textarea{min-height:96px; resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--muted); opacity:.8}
+input[type=text]:focus-visible,textarea:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+.puces{display:flex; flex-wrap:wrap; gap:8px}
+.puce{position:relative; cursor:pointer}
+.puce input,.seg input{position:absolute; opacity:0; inset:0; width:100%; height:100%; margin:0; cursor:pointer}
+.puce span{
+  display:block; padding:9px 15px; border-radius:999px;
+  background:var(--glass-strong); border:1px solid var(--line);
+  font-weight:500; font-size:15px; transition:background .15s, transform .15s;
+}
+.puce:hover span{border-color:var(--accent)}
+.puce input:checked + span{background:var(--accent); color:var(--on-accent); border-color:var(--accent)}
+.puce input:focus-visible + span,.seg input:focus-visible + span{outline:2px solid var(--accent); outline-offset:2px}
+.puce:active span{transform:scale(.97)}
+
+.lignes{display:flex; flex-direction:column}
+.ligne{display:flex; align-items:center; justify-content:space-between; gap:10px 16px; flex-wrap:wrap; padding:12px 0; border-top:1px solid var(--line)}
+.ligne:first-child{border-top:0; padding-top:0}
+.ln{font-weight:500; flex:1 1 200px; min-width:0}
+.seg{display:flex; flex:0 1 auto; background:var(--glass-strong); border:1px solid var(--line); border-radius:999px; padding:3px}
+.seg label{position:relative; cursor:pointer}
+.seg span{display:block; padding:6px 12px; border-radius:999px; font-size:13.5px; font-weight:500; color:var(--muted); white-space:nowrap}
+.seg input:checked + span{background:var(--accent); color:var(--on-accent)}
+@media (max-width:520px){
+  .seg{width:100%}
+  .seg label{flex:1; text-align:center}
+  .seg span{padding:8px 4px; font-size:13px}
+}
+
+.coche{display:flex; gap:10px; align-items:flex-start; cursor:pointer}
+.coche input{width:20px; height:20px; margin:2px 0 0; accent-color:var(--accent); flex:none}
+
+.alerte{color:var(--warn); font-weight:600; margin:0; font-size:15px}
+
+.nav{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; padding-top:4px}
+button{font:600 16px/1 var(--body); border-radius:999px; padding:14px 24px; cursor:pointer; border:1px solid var(--line); background:var(--glass-strong); color:var(--ink)}
+button.go{background:var(--accent); color:var(--on-accent); border-color:var(--accent); margin-left:auto; box-shadow:0 10px 24px -12px var(--shadow)}
+button:hover{filter:brightness(1.06)}
+button:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+button[disabled]{opacity:.6; cursor:progress}
+
+.recap{min-height:240px; font-size:14px; line-height:1.5; white-space:pre-wrap}
+.pied{font-size:13px; color:var(--muted); text-align:center; margin:0}
+
+@media (prefers-reduced-motion: reduce){
+  .bulle,.etape{animation:none}
+  .puce span{transition:none}
+}
+</style>
+
+<div class="eau" aria-hidden="true" id="eau"></div>
+
+<main class="page">
+  <header class="entete">
+    <div class="marque"><i></i><span id="marque"></span></div>
+    <h1>À quoi ressemblerait votre outil de gestion idéal&nbsp;?</h1>
+    <p class="chapo">Cinq minutes, aucune bonne ou mauvaise réponse. On construit un outil de gestion pour les petites entreprises, et on préfère vous demander avant de le dessiner.</p>
+  </header>
+
+  <form class="verre" id="carte" novalidate></form>
+
+  <p class="pied">Vos réponses ne servent qu'à concevoir l'outil. Elles ne sont ni revendues ni publiées.</p>
+</main>
+
+<script>
+/* ─── À régler ─────────────────────────────────────────────
+   marque  : le nom affiché en haut du questionnaire.
+   webhook : l'adresse d'un webhook Make (ou autre). Si elle est remplie,
+             chaque questionnaire terminé y est envoyé en JSON.
+             Fonctionne quand le fichier est hébergé sur votre propre site. */
+/* cle : la clé d'accès Web3Forms. Si elle est remplie, chaque questionnaire
+         terminé arrive par e-mail sur l'adresse liée à cette clé. */
+const CONFIG = { marque: "Lumio", cle: "", webhook: "" };
+
+const NIVEAUX = ["Pas besoin", "Ce serait bien", "Indispensable"];
+const ETAPES = [
+  { titre: "Votre entreprise", intro: "Trois infos pour situer votre activité.", q: [
+    { k: "entreprise", t: "text", l: "Nom de l'entreprise", opt: 1, ph: "Si vous voulez bien nous le dire" },
+    { k: "secteur", t: "one", l: "Votre secteur", req: 1, o: ["Artisanat, bâtiment", "Commerce", "Restauration", "Santé, bien-être", "Sport, loisirs", "Services aux entreprises", "Location, hébergement", "Association", "Autre"] },
+    { k: "taille", t: "one", l: "Combien de personnes travaillent dans l'entreprise ?", req: 1, o: ["Je suis seul·e", "2 à 5", "6 à 10", "11 à 20", "Plus de 20"] }
+  ]},
+  { titre: "Votre gestion aujourd'hui", intro: "Comment ça se passe en ce moment, sans filtre.", q: [
+    { k: "outils", t: "many", l: "Avec quoi gérez-vous votre activité ?", o: ["Papier, carnet", "Excel ou Google Sheets", "Un logiciel de facturation", "Un logiciel de compta", "Un logiciel fait pour mon métier", "Plusieurs applis qui ne se parlent pas", "Mon comptable s'occupe de tout", "Rien de précis"] },
+    { k: "outilsNoms", t: "text", l: "Si vous utilisez des logiciels, lesquels ?", opt: 1, ph: "Ex. Pennylane, Excel, Planity…" },
+    { k: "temps", t: "one", l: "Temps passé sur l'administratif chaque semaine", o: ["Moins d'1 h", "1 à 3 h", "3 à 5 h", "5 à 10 h", "Plus de 10 h"] },
+    { k: "galeres", t: "many", l: "Qu'est-ce qui vous coûte le plus de temps ou d'énergie ?", o: ["Ressaisir les mêmes infos", "Faire les devis", "Relancer les impayés", "Retrouver un document", "Savoir où en est la trésorerie", "Gérer les plannings", "Préparer les papiers pour le comptable", "Jongler entre trop d'outils", "Des outils trop compliqués", "Des abonnements trop chers"] }
+  ]},
+  { titre: "Votre outil idéal", intro: "Pour chaque fonction, dites à quel point elle compterait pour vous.", q: [
+    { k: "modules", t: "scale", rows: ["Devis et factures", "Suivi des paiements et relances automatiques", "Trésorerie et prévisions", "Fichier clients et historique", "Agenda et prise de rendez-vous", "Planning de l'équipe", "Congés, absences, dossiers salariés", "Stock et commandes fournisseurs", "Suivi de chantiers ou de projets", "Photo d'une facture qui se saisit toute seule", "Notes de frais", "Tableau de bord avec les chiffres clés", "Export prêt pour le comptable", "Signature électronique des devis", "Paiement en ligne par le client"] },
+    { k: "manque", t: "text", l: "Une fonction qui manque à la liste ?", opt: 1, ph: "Ce dont vous auriez besoin et qu'on a oublié" }
+  ]},
+  { titre: "Au quotidien", intro: "Comment vous vous en serviriez.", q: [
+    { k: "appareils", t: "many", l: "Vous l'utiliseriez surtout sur…", o: ["Ordinateur", "Téléphone", "Tablette"] },
+    { k: "utilisateurs", t: "one", l: "Qui s'en servirait ?", o: ["Moi uniquement", "Moi et mon comptable", "Quelques personnes de l'équipe", "Toute l'équipe"] },
+    { k: "criteres", t: "many", max: 3, l: "Ce qui compte le plus pour vous", hint: "3 choix maximum", o: ["Simple à prendre en main", "Rapide", "Agréable à regarder", "Adapté à mon métier", "Tout au même endroit", "Utilisable sur téléphone", "Quelqu'un à appeler en cas de souci", "Un petit prix"] },
+    { k: "budget", t: "one", l: "Ce que vous seriez prêt·e à payer par mois", o: ["Rien, il faudrait que ce soit gratuit", "Moins de 20 €", "20 à 50 €", "50 à 100 €", "Plus de 100 €", "Je préfère payer une seule fois"] }
+  ]},
+  { titre: "Le mot de la fin", intro: "C'est ici que vos réponses nous aident le plus.", q: [
+    { k: "magie", t: "area", l: "Si l'outil pouvait faire une seule chose à votre place, ce serait quoi ?", ph: "La tâche que vous aimeriez ne plus jamais faire" },
+    { k: "deteste", t: "area", l: "Ce qui vous agace dans les logiciels que vous avez essayés", opt: 1, ph: "Trop de clics, trop de menus, trop cher…" },
+    { k: "prenom", t: "text", l: "Votre prénom", opt: 1, ph: "" },
+    { k: "contact", t: "text", l: "E-mail ou téléphone", opt: 1, ph: "Seulement si vous voulez qu'on vous recontacte" },
+    { k: "rappel", t: "check", l: "Je veux bien tester l'outil en avant-première et donner mon avis." }
+  ]}
+];
+
+const CLE = "outil-ideal-brouillon";
+let A = { modules: {} }, pas = 0, fini = false;
+try { const b = JSON.parse(localStorage.getItem(CLE) || "null"); if (b && b.A) { A = b.A; A.modules = A.modules || {}; pas = Math.min(b.pas || 0, ETAPES.length - 1); } } catch (e) {}
+const garde = () => { try { localStorage.setItem(CLE, JSON.stringify({ A, pas })); } catch (e) {} };
+
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const carte = document.getElementById("carte");
+document.getElementById("marque").textContent = CONFIG.marque;
+
+function champ(q) {
+  const fac = q.opt ? " <small>(facultatif)</small>" : "";
+  const hint = q.hint ? ` <small>· ${esc(q.hint)}</small>` : "";
+  if (q.t === "text") return `<label class="q"><span class="ql">${esc(q.l)}${fac}</span><input type="text" id="f-${q.k}" data-k="${q.k}" value="${esc(A[q.k])}" placeholder="${esc(q.ph || "")}" autocomplete="off"></label>`;
+  if (q.t === "area") return `<label class="q"><span class="ql">${esc(q.l)}${fac}</span><textarea id="f-${q.k}" data-k="${q.k}" placeholder="${esc(q.ph || "")}">${esc(A[q.k])}</textarea></label>`;
+  if (q.t === "check") return `<label class="coche"><input type="checkbox" id="f-${q.k}" data-k="${q.k}" data-t="check" ${A[q.k] ? "checked" : ""}><span>${esc(q.l)}</span></label>`;
+  if (q.t === "one" || q.t === "many") {
+    const many = q.t === "many", val = A[q.k];
+    return `<fieldset class="q"><legend class="ql">${esc(q.l)}${hint}</legend><div class="puces">` + q.o.map((o, i) => {
+      const on = many ? (val || []).includes(o) : val === o;
+      return `<label class="puce"><input type="${many ? "checkbox" : "radio"}" id="f-${q.k}-${i}" name="${q.k}" data-k="${q.k}" data-t="${q.t}" value="${esc(o)}" ${on ? "checked" : ""}><span>${esc(o)}</span></label>`;
+    }).join("") + `</div><p class="alerte" id="a-${q.k}" hidden></p></fieldset>`;
+  }
+  if (q.t === "scale") return `<div class="lignes">` + q.rows.map((r, i) =>
+    `<div class="ligne" role="radiogroup" aria-label="${esc(r)}"><span class="ln">${esc(r)}</span><div class="seg">` +
+    NIVEAUX.map((n, j) => `<label><input type="radio" id="f-m${i}-${j}" name="m${i}" data-t="scale" data-row="${esc(r)}" value="${esc(n)}" ${A.modules[r] === n ? "checked" : ""}><span>${n}</span></label>`).join("") +
+    `</div></div>`).join("") + `</div>`;
+  return "";
+}
+
+function affiche(focus) {
+  if (fini) return;
+  const e = ETAPES[pas], dernier = pas === ETAPES.length - 1;
+  carte.innerHTML =
+    `<div class="avance"><ol class="pas" aria-hidden="true">${ETAPES.map((_, i) => `<li class="${i < pas ? "fait" : i === pas ? "ici" : ""}"></li>`).join("")}</ol>` +
+    `<span class="ou">Étape ${pas + 1} sur ${ETAPES.length}</span></div>` +
+    `<section class="etape"><h2 tabindex="-1" id="titre">${esc(e.titre)}</h2><p class="intro">${esc(e.intro)}</p>${e.q.map(champ).join("")}</section>` +
+    `<div class="nav">${pas ? `<button type="button" id="retour">Retour</button>` : ""}<button type="submit" class="go" id="suite">${dernier ? "Envoyer mes réponses" : "Continuer"}</button></div>`;
+  if (focus) { document.getElementById("titre").focus({ preventScroll: true }); carte.scrollIntoView({ block: "start", behavior: "smooth" }); }
+}
+
+carte.addEventListener("input", ev => {
+  const el = ev.target, t = el.dataset.t, k = el.dataset.k;
+  if (t === "scale") A.modules[el.dataset.row] = el.value;
+  else if (t === "check") A[k] = el.checked;
+  else if (t === "one") A[k] = el.value;
+  else if (t === "many") {
+    const q = ETAPES[pas].q.find(x => x.k === k), set = new Set(A[k] || []);
+    el.checked ? set.add(el.value) : set.delete(el.value);
+    const al = document.getElementById("a-" + k);
+    if (q.max && set.size > q.max) { set.delete(el.value); el.checked = false; al.textContent = `${q.max} choix maximum. Décochez-en un pour changer.`; al.hidden = false; }
+    else if (al) al.hidden = true;
+    A[k] = [...set];
+  } else if (k) A[k] = el.value;
+  if (k) { const al = document.getElementById("a-" + k); if (al && t === "one") al.hidden = true; }
+  garde();
+});
+
+carte.addEventListener("click", ev => {
+  if (ev.target.id === "retour") { pas--; garde(); affiche(true); }
+  if (ev.target.id === "copier") copie(ev.target);
+  if (ev.target.id === "encore") { A = { modules: {} }; pas = 0; fini = false; try { localStorage.removeItem(CLE); } catch (e) {} affiche(true); }
+});
+
+carte.addEventListener("submit", ev => {
+  ev.preventDefault();
+  if (fini) return;
+  const manque = ETAPES[pas].q.filter(q => q.req && !A[q.k]);
+  if (manque.length) {
+    manque.forEach(q => { const al = document.getElementById("a-" + q.k); al.textContent = "Choisissez une réponse pour continuer."; al.hidden = false; });
+    document.getElementById("f-" + manque[0].k + "-0").focus();
+    return;
+  }
+  if (pas < ETAPES.length - 1) { pas++; garde(); affiche(true); } else envoie();
+});
+
+function recap() {
+  const L = ["QUESTIONNAIRE OUTIL DE GESTION", new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }), ""];
+  ETAPES.forEach(e => {
+    L.push("— " + e.titre.toUpperCase());
+    e.q.forEach(q => {
+      if (q.t === "scale") {
+        [...NIVEAUX].reverse().forEach(n => { const r = q.rows.filter(x => A.modules[x] === n); if (r.length) L.push(`${n} : ${r.join(", ")}`); });
+        const sans = q.rows.filter(x => !A.modules[x]); if (sans.length) L.push(`Sans avis : ${sans.join(", ")}`);
+      } else if (q.t === "check") L.push(`${q.l} ${A[q.k] ? "Oui" : "Non"}`);
+      else { const v = Array.isArray(A[q.k]) ? A[q.k].join(", ") : (A[q.k] || "").trim(); if (v) L.push(`${q.l} ${v}`); }
+    });
+    L.push("");
+  });
+  return L.join("\n").trim();
+}
+
+async function envoie() {
+  const btn = document.getElementById("suite"); btn.disabled = true; btn.textContent = "Envoi…";
+  const texte = recap(); let recu = false;
+  if (CONFIG.cle) {
+    try {
+      const r = await fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({ access_key: CONFIG.cle, subject: "Questionnaire outil idéal : " + (A.entreprise || A.secteur || "nouvelle réponse"), from_name: CONFIG.marque, message: texte }) });
+      recu = r.ok && (await r.json()).success === true;
+    } catch (e) { recu = false; }
+  } else if (CONFIG.webhook) {
+    try {
+      const r = await fetch(CONFIG.webhook, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ date: new Date().toISOString(), ...A, recap: texte }) });
+      recu = r.ok;
+    } catch (e) { recu = false; }
+  }
+  fini = true;
+  try { localStorage.removeItem(CLE); } catch (e) {}
+  carte.innerHTML = recu
+    ? `<section class="etape"><h2 tabindex="-1" id="titre">Merci, c'est bien reçu.</h2><p class="intro">Vos réponses vont directement dans la conception de l'outil. Si vous avez laissé un contact, on revient vers vous.</p>
+       <label class="q"><span class="ql">Ce que vous nous avez dit</span><textarea class="recap" id="recap" readonly></textarea></label></section>
+       <div class="nav"><button type="button" id="encore">Remplir un autre questionnaire</button><button type="button" class="go" id="copier">Copier mes réponses</button></div>`
+    : `<section class="etape"><h2 tabindex="-1" id="titre">Merci ! Il reste un geste.</h2><p class="intro">Copiez vos réponses, puis collez-les en réponse au message qui vous a amené ici. C'est tout.</p>
+       <label class="q"><span class="ql">Vos réponses</span><textarea class="recap" id="recap" readonly></textarea></label></section>
+       <div class="nav"><button type="button" id="encore">Recommencer</button><button type="button" class="go" id="copier">Copier mes réponses</button></div>`;
+  document.getElementById("recap").value = texte;
+  document.getElementById("titre").focus({ preventScroll: true });
+  carte.scrollIntoView({ block: "start", behavior: "smooth" });
+}
+
+function copie(btn) {
+  const z = document.getElementById("recap");
+  const ok = () => { btn.textContent = "Copié"; setTimeout(() => btn.textContent = "Copier mes réponses", 2200); };
+  const secours = () => { z.focus(); z.select(); btn.textContent = "Texte sélectionné, copiez-le"; };
+  try { navigator.clipboard.writeText(z.value).then(ok, secours); } catch (e) { secours(); }
+}
+
+/* bulles du fond : positions fixes, pas de hasard, pour que la page soit la même à chaque ouverture */
+(function () {
+  const eau = document.getElementById("eau");
+  [["8%", "12%", 380, "--b1"], ["72%", "4%", 420, "--b2"], ["58%", "62%", 460, "--b3"], ["-6%", "70%", 360, "--b2"]].forEach(([x, y, s, c]) => {
+    const d = document.createElement("div"); d.className = "tache";
+    d.style.cssText = `left:${x};top:${y};width:${s}px;height:${s}px;background:var(${c})`; eau.appendChild(d);
+  });
+  [["6%", "18%", 120, "--b1", 14, 30, -24], ["84%", "12%", 70, "--b2", 11, -18, 26], ["90%", "46%", 150, "--b3", 17, -26, -30],
+   ["3%", "58%", 54, "--b3", 9, 16, -20], ["14%", "84%", 96, "--b2", 13, 24, -18], ["70%", "86%", 64, "--b1", 12, -20, -22],
+   ["46%", "3%", 40, "--b1", 10, 12, 18], ["78%", "68%", 30, "--b2", 8, -10, -16]].forEach(([x, y, s, c, d, dx, dy]) => {
+    const b = document.createElement("div"); b.className = "bulle";
+    b.style.cssText = `left:${x};top:${y};width:${s}px;height:${s}px;--tint:var(${c});--d:${d}s;--dx:${dx}px;--dy:${dy}px`; eau.appendChild(b);
+  });
+})();
+
+affiche(false);
+</script>
