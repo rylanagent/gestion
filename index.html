@@ -329,13 +329,11 @@ async function envoie() {
   fini = true;
   try { localStorage.removeItem(CLE); } catch (e) {}
   carte.innerHTML = recu
-    ? `<section class="etape"><h2 tabindex="-1" id="titre">Merci, c'est bien reçu.</h2><p class="intro">Vos réponses vont directement dans la conception de l'outil. Si vous avez laissé un contact, on revient vers vous.</p>
-       <label class="q"><span class="ql">Ce que vous nous avez dit</span><textarea class="recap" id="recap" readonly></textarea></label></section>
-       <div class="nav"><button type="button" id="encore">Remplir un autre questionnaire</button><button type="button" class="go" id="copier">Copier mes réponses</button></div>`
+    ? `<section class="etape"><h2 tabindex="-1" id="titre">Merci, c'est bien reçu.</h2><p class="intro">Vos réponses vont directement dans la conception de l'outil. Si vous avez laissé un contact, on revient vers vous.</p></section>`
     : `<section class="etape"><h2 tabindex="-1" id="titre">Merci ! Il reste un geste.</h2><p class="intro">Copiez vos réponses, puis collez-les en réponse au message qui vous a amené ici. C'est tout.</p>
        <label class="q"><span class="ql">Vos réponses</span><textarea class="recap" id="recap" readonly></textarea></label></section>
        <div class="nav"><button type="button" id="encore">Recommencer</button><button type="button" class="go" id="copier">Copier mes réponses</button></div>`;
-  document.getElementById("recap").value = texte;
+  const z = document.getElementById("recap"); if (z) z.value = texte;
   document.getElementById("titre").focus({ preventScroll: true });
   carte.scrollIntoView({ block: "start", behavior: "smooth" });
 }
